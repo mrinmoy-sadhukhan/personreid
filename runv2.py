@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import cuhk03_datasetv2
 xrange=range
+tf.compat.v1.disable_eager_execution()
 FLAGS = tf.compat.v1.flags.FLAGS
 tf.compat.v1.flags.DEFINE_integer('batch_size', '150', 'batch size for training')
 tf.compat.v1.flags.DEFINE_integer('max_steps', '210000', 'max steps for training')
