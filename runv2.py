@@ -125,9 +125,9 @@ def main(argv=None):
     val_num_id = 0
 
     if FLAGS.mode == 'train':
-        tarin_num_id = cuhk03_dataset.get_num_id(FLAGS.data_dir, 'train')
+        tarin_num_id = cuhk03_datasetv2.get_num_id(FLAGS.data_dir, 'train')
     elif FLAGS.mode == 'val':
-        val_num_id = cuhk03_dataset.get_num_id(FLAGS.data_dir, 'val')
+        val_num_id = cuhk03_datasetv2.get_num_id(FLAGS.data_dir, 'val')
     images1, images2 = preprocess(images, is_train)
 
     print('Build network')
@@ -151,7 +151,7 @@ def main(argv=None):
         if FLAGS.mode == 'train':
             step = sess.run(global_step)
             for i in xrange(step, FLAGS.max_steps + 1):
-                batch_images, batch_labels = cuhk03_dataset.read_data(FLAGS.data_dir, 'train', tarin_num_id,
+                batch_images, batch_labels = cuhk03_datasetv2.read_data(FLAGS.data_dir, 'train', tarin_num_id,
                     IMAGE_WIDTH, IMAGE_HEIGHT, FLAGS.batch_size)
                 feed_dict = {learning_rate: lr, images: batch_images,
                     labels: batch_labels, is_train: True}
@@ -165,7 +165,7 @@ def main(argv=None):
         elif FLAGS.mode == 'val':
             total = 0.
             for _ in xrange(10):
-                batch_images, batch_labels = cuhk03_dataset.read_data(FLAGS.data_dir, 'val', val_num_id,
+                batch_images, batch_labels = cuhk03_datasetv2.read_data(FLAGS.data_dir, 'val', val_num_id,
                     IMAGE_WIDTH, IMAGE_HEIGHT, FLAGS.batch_size)
                 feed_dict = {images: batch_images, labels: batch_labels, is_train: False}
                 prediction = sess.run(inference, feed_dict=feed_dict)
